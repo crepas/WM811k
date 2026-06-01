@@ -32,6 +32,14 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 - 전체 811,457개 웨이퍼 맵 중 라벨링된 172,950개 사용
 - 9개 클래스: None, Center, Donut, Edge-Loc, Edge-Ring, Loc, Near-Full, Random, Scratch
 
+## 컬럼
+- waferMap2D 배열실제 웨이퍼 이미지 데이터 (0=빈공간, 1=정상, 2=불량)
+- dieSize숫자웨이퍼 크기 (가로×세로 다이 수)
+- lotName문자열같은 배치(lot)에서 생산된 웨이퍼 묶음 번호
+- waferIndex숫자lot 내에서 웨이퍼 순서
+- trainTestLabel문자열원본 train/test 구분
+- failureType문자열불량 패턴 라벨
+
 ### 클래스별 데이터 분포
 
 | 클래스 | 데이터 수 | 비율 |
@@ -76,7 +84,7 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 | **C-25** | 25% | ✅ ImageNet pretrained | **핵심 실험** |
 | **C-50** | 50% | ✅ ImageNet pretrained | B논문과 동일 증강, TL 추가 |
 
-- 모델: **ResNet50** (고정)
+- 모델: **ResNet50** 
 - 프레임워크: **PyTorch**
 - 환경: AWS EC2
 
@@ -97,3 +105,68 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 ---
 
 ## 프로젝트 구조
+
+wafer-defect/
+├── data/
+│   └── LSWMD.pkl
+├── src/
+│   ├── dataset.py       # 데이터 로드 및 전처리
+│   ├── augmentation.py  # 회전 기반 데이터 증강
+│   ├── model.py         # ResNet50 모델 정의
+│   ├── train.py         # 학습 코드
+│   └── evaluate.py      # 평가 코드
+├── logs/                # 학습 로그
+├── checkpoints/         # 모델 가중치
+├── requirements.txt
+└── README.md
+
+
+---
+
+## 환경 설정
+
+```bash
+pip install -r requirements.txt
+```
+torch
+torchvision
+numpy
+pandas
+matplotlib
+scikit-learn
+tqdm
+kaggle
+
+---
+
+## 실행 방법
+
+```bash
+# 데이터 다운로드
+kaggle datasets download -d qingyi/wm811k-wafer-map
+unzip wm811k-wafer-map.zip -d ./data/
+
+# 학습 실행
+python src/train.py --augment_ratio 0.25 --transfer_learning True
+
+# 평가
+python src/evaluate.py --checkpoint checkpoints/best_model.pth
+```
+
+---
+
+## 참고 논문
+
+- 박인영, 김지영, "데이터 클래스 불균형을 고려한 전이학습 기반의 반도체 웨이퍼 빈 맵 결함 패턴 분류", 한국산학기술학회논문지, Vol.25, No.5, 2024.
+- 박상현, 김지성, 남춘성, "WM-811K 데이터셋의 클래스 불균형 방안에 관한 연구", 멀티미디어학회 논문지, Vol.28, No.10, 2025.
+
+---
+
+## TODO
+
+- [ ] 데이터 전처리 코드 작성
+- [ ] 증강 코드 작성
+- [ ] C-0 실험
+- [ ] C-25 실험
+- [ ] C-50 실험
+- [ ] 결과 분석 및 보고서 작성
