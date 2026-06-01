@@ -3,19 +3,19 @@
 ## 프로젝트 개요
 
 WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을 분류하는 딥러닝 모델을 구현합니다.
-기존 연구의 한계를 보완하여 **Transfer Learning + 최소 데이터 증강** 조합으로
+기존 연구를 보완하여 **Transfer Learning + 최소한의 데이터 증강** 으로
 적은 계산 비용으로 높은 분류 성능을 달성하는 것을 목표로 합니다.
 
 ---
 
 ## 연구 동기
 
-기존 연구의 한계:
+기존 연구:
 
 - **A논문 (경북대, 2024)**: Transfer Learning만으로 94.8% 달성했으나 None(정상) 클래스를 제외한 실험으로 실제 현장과 조건이 다름
 - **B논문 (인하대, 2025)**: 회전 증강 50%로 GM+ 0.9195 달성했으나 Transfer Learning 미적용
 
-→ 두 논문 모두 시도하지 않은 **"None 포함 + Transfer Learning + 최소 증강"** 조합을 실험합니다.
+→ 두 논문에서 시도하지 않은 **"None 포함 + Transfer Learning + 최소 증강"** 조합을 실험합니다.
 
 ---
 
@@ -33,12 +33,12 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 - 9개 클래스: None, Center, Donut, Edge-Loc, Edge-Ring, Loc, Near-Full, Random, Scratch
 
 ## 컬럼
-- waferMap2D 배열실제 웨이퍼 이미지 데이터 (0=빈공간, 1=정상, 2=불량)
-- dieSize숫자웨이퍼 크기 (가로×세로 다이 수)
-- lotName문자열같은 배치(lot)에서 생산된 웨이퍼 묶음 번호
-- waferIndex숫자lot 내에서 웨이퍼 순서
-- trainTestLabel문자열원본 train/test 구분
-- failureType문자열불량 패턴 라벨
+- waferMap (2D 배열) 실제 웨이퍼 이미지 데이터 (0=빈공간, 1=정상, 2=불량)
+- dieSize (숫자) 웨이퍼 크기 (가로×세로 다이 수)
+- lotName (문자열) 같은 배치(lot)에서 생산된 웨이퍼 묶음 번호
+- waferIndex (숫자) lot 내에서 웨이퍼 순서
+- trainTestLabel (문자열) 원본 train/test 구분
+- failureType (문자열) 불량 패턴 라벨
 
 ### 클래스별 데이터 분포
 
@@ -65,6 +65,7 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 ---
 
 ## 데이터 증강
+B논문에서의 방식을 가이드라인으로
 
 - 방식: **회전(Rotation)** 기반 오버샘플링
 - 범위: 1° ~ 359° (원본과 중복 방지)
