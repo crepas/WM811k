@@ -107,6 +107,7 @@ B논문에서의 방식을 가이드라인으로
 
 ## 프로젝트 구조
 
+```
 wafer-defect/
 ├── data/
 │   └── LSWMD.pkl
@@ -120,8 +121,7 @@ wafer-defect/
 ├── checkpoints/         # 모델 가중치
 ├── requirements.txt
 └── README.md
-
-
+```
 ---
 
 ## 환경 설정
