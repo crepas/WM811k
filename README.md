@@ -28,7 +28,7 @@ WM-811K 데이터셋을 활용하여 반도체 웨이퍼 맵의 불량 패턴을
 
 ## 데이터셋
 
-- **WM-811K** (Kaggle): https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map
+- **WM-811K** (Kaggle): https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map   (LSWMD.pkl)
 - 전체 811,457개 웨이퍼 맵 중 라벨링된 172,950개 사용
 - 9개 클래스: None, Center, Donut, Edge-Loc, Edge-Ring, Loc, Near-Full, Random, Scratch
 
@@ -160,14 +160,3 @@ python src/evaluate.py --checkpoint checkpoints/best_model.pth
 
 - 박인영, 김지영, "데이터 클래스 불균형을 고려한 전이학습 기반의 반도체 웨이퍼 빈 맵 결함 패턴 분류", 한국산학기술학회논문지, Vol.25, No.5, 2024.
 - 박상현, 김지성, 남춘성, "WM-811K 데이터셋의 클래스 불균형 방안에 관한 연구", 멀티미디어학회 논문지, Vol.28, No.10, 2025.
-
----
-
-## TODO
-
-- [ ] 데이터 전처리 코드 작성
-- [ ] 증강 코드 작성
-- [ ] C-0 실험
-- [ ] C-25 실험
-- [ ] C-50 실험
-- [ ] 결과 분석 및 보고서 작성
