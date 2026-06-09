@@ -1,0 +1,7 @@
+data/
+checkpoints/
+wafer-env/
+__pycache__/
+*.pkl
+*.zip
+*.pth
